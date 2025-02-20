@@ -2,6 +2,7 @@ from page_object.base_page import BasePage
 from locators import Locators
 from selenium.webdriver.common.action_chains import ActionChains
 from constants import UserFieldsCollection
+from data import PopupActiveClass
 import allure
 
 
@@ -30,19 +31,23 @@ class PageOrder(BasePage):
     def click_element_list_ingredients(self):
         self.find_element_base(locator=Locators.locator_link_ingredient, time=2).click()
 
-
     @allure.step('Появление всплывающего окна с деталями ингредиента')
     def open_popup_ingredient_details(self):
         self.click_tab_ingredients()
         self.find_element_base(locator=Locators.locator_link_ingredient, time=2).is_displayed()
         self.click_element_list_ingredients()
-        return self.find_element_base(locator=Locators.locator_popup_ingredient_details, time=2).is_displayed()
+        has_class = self.find_element_base(locator=Locators.locator_section_popup_ingredient_details, time=2).get_attribute("class").split(" ")
 
-    @allure.step('Закрытие всплывающего окна с деталями ингредиента')
+        return PopupActiveClass.MODAL_OPENED in has_class
+
+    @allure.step('Закрытие всплывающего окна с деталями ингредиента')#
     def close_popup_ingredient_details(self):
-        self.find_element_base(locator=Locators.locator_popup_ingredient_details, time=2).is_displayed()
+        self.find_element_base(locator=Locators.locator_section_popup_ingredient_details, time=2).is_displayed()
         self.find_element_base(locator=Locators.locator_button_close_popup_ingredient_details, time=2).click()
-        return self.find_element_base(locator=Locators.locator_popup_ingredient_details, time=2).is_displayed()
+        has_class = self.find_element_base(locator=Locators.locator_section_popup_ingredient_details, time=2).get_attribute("class").split(" ")
+
+        return PopupActiveClass.MODAL_OPENED in has_class
+
 
     @allure.step('Увеличить значение каунтера ингредиента при добавлении его в заказ')
     def drag_and_drop_ingredients_to_order(self, driver):

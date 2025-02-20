@@ -1,5 +1,6 @@
 from page_object.feed_page import PageFeed
 from constants import UserFieldsCollection
+from confest import driver, fixture_make_order
 import allure
 
 

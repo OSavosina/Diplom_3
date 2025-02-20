@@ -1,6 +1,7 @@
 from page_object.page_forgot_password import PageForgotPassword
 from constants import PageUrl
 from helpers.helpers import generate_fields_user
+from confest import driver
 from data import TestsUserData
 import allure
 

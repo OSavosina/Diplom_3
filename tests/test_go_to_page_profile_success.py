@@ -1,5 +1,6 @@
 from page_object.page_profile import PageProfile
 from constants import PageUrl, UserFieldsCollection
+from confest import driver, fixture_create_user
 import allure
 
 

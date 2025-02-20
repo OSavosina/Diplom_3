@@ -1,5 +1,6 @@
 from page_object.order_page import PageOrder
 from constants import PageUrl, UserFieldsCollection
+from confest import driver, fixture_create_user
 import allure
 
 

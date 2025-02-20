@@ -4,6 +4,7 @@ from constants import UserFieldsCollection
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from client.services import service_get_ingredients, service_create_order
+from data import PopupActiveClass
 import allure
 
 
@@ -61,14 +62,16 @@ class PageFeed(BasePage):
 
     @allure.step('Окно с деталями заказа открыто')
     def open_popup_order_element(self):
-        return self.find_element_base(locator=Locators.locator_popup_order_details, time=2).is_displayed()
+        self.find_element_base(locator=Locators.locator_popup_order_details, time=2).is_displayed()
+        has_class = self.find_element_base(locator=Locators.locator_popup_order_details,time=2).get_attribute("class").split(" ")
+
+        return PopupActiveClass.MODAL_OPENED in has_class
 
     @allure.step('Закрыть окно с деталями заказа')
     def close_popup_order_element(self):
         self.find_element_base(locator=Locators.locator_popup_order_details, time=2).is_displayed()
         self.find_element_base(locator=Locators.locator_order_title, time=2).is_displayed()
         self.find_element_base(locator=Locators.locator_button_close_popup_order_details, time=2).click()
-
 
 
     @allure.step('Конструктор заказа')
